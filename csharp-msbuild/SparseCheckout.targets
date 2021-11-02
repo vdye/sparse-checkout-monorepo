@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- -->
+  <Target Name="HandleSparseReferences" Condition="'@(SparseReference)' != ''" Inputs="@(SparseReference)" Outputs="%(Identity).sparseref">
+    <!-- Get the relative path of the repo root from the current project directory -->
+    <Exec Command="git rev-parse --show-prefix" ConsoleToMsBuild="true" StandardOutputImportance="low">
+      <Output TaskParameter="ConsoleOutput" PropertyName="_RelativeToRepoRoot" />
+    </Exec>
+
+    <!-- Aggregate properties of the dependency -->
+    <PropertyGroup>
+      <PkgName>@(SparseReference)</PkgName>
+      <PkgVersion>%(SparseReference.Version)</PkgVersion>
+      <ProjPath>%(SparseReference.BasePath)@(SparseReference).csproj</ProjPath>
+      <RepoProjPath>$(_RelativeToRepoRoot)/%(SparseReference.BasePath)</RepoProjPath>
+    </PropertyGroup>
+
+    <!-- Add the sparse directories as necessary -->
+    <Exec Command="git sparse-checkout add '$(RepoProjPath)'"
+          IgnoreExitCode="true"
+          Condition="'$(PkgVersion)' == '' And !Exists('$(ProjPath)')" />
+
+    <!-- Add the package or project reference, depending on SparseReference specification -->
+    <ItemGroup>
+        <PackageReference Include="$(PkgName)" Version="$(PkgVersion)" Condition="!Exists('$(ProjPath)')" />
+        <ProjectReference Include="$(ProjPath)" Condition="Exists('$(ProjPath)')" />
+    </ItemGroup>
+
+    <!-- Debug: print the status -->
+    <!-- <Message Importance="High" Text="Package Reference: $(PkgName)" Condition="!Exists('$(ProjPath)')" />
+    <Message Importance="High" Text="Project Reference: $(ProjPath)" Condition="Exists('$(ProjPath)')" /> -->
+  </Target>
+
+</Project>

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk" InitialTargets="HandleSparseReferences">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -6,7 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../SparseApp.Shared/SparseApp.Shared.csproj" />
-    <ProjectReference Include="../SparseApp.Core/SparseApp.Core.csproj" />
+    <SparseReference Include="SparseApp.Shared" BasePath="../SparseApp.Shared/" Version="1.0.0" />
+    <SparseReference Include="SparseApp.Core" BasePath="../SparseApp.Core/" />
   </ItemGroup>
+
+  <Import Project="../SparseCheckout.targets" />
 </Project>
