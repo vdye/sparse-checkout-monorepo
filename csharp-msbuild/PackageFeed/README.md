@@ -1,0 +1,1 @@
+This "PackageFeed" is a stand-in for what would otherwise exist as a remote package feed for a developer. It would (ideally) not exist in an actual repo.
