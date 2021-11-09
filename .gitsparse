@@ -1,0 +1,6 @@
+[csharp-dev]
+/csharp-msbuild/PackageFeed
+/csharp-msbuild/SparseApp
+
+[cpp-dev]
+/cpp-bazel/  # TODO: handle sparse-checkout internally
