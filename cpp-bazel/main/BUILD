@@ -4,7 +4,7 @@ cc_binary(
     name = "hello-world",
     srcs = ["hello-world.cc"],
     deps = [
-        "//libcore:hello-time",
-        "//libshared:hello-greet",
+        "@libcore//libcore:hello-time",
+        "@libshared//libshared:hello-greet",
     ],
 )

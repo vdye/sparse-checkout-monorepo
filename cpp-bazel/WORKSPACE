@@ -1,0 +1,11 @@
+new_local_repository(
+    name = "libshared",
+    path = ".",
+    build_file = "./libshared/BUILD"
+)
+
+new_local_repository(
+    name = "libcore",
+    path = ".",
+    build_file = "./libcore/BUILD"
+)
