@@ -1,14 +1,3 @@
-# load(":sparse_git.bzl", "sparse_git_repo")
+load(":sparse_git.bzl", "sparse_checkout_adapter")
 
-# sparse_git_repo(
-#     name = "libshared",
-#     path = "./libshared"
-# )
-
-# sparse_git_repo(
-#     name = "libcore",
-#     path = "./libcore"
-# )
-
-# sparse_cone(name = "libshared")
-# sparse_cone(name = "libcore")
+sparse_checkout_adapter(name="deleteme")
